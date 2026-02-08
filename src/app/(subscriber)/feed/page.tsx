@@ -90,16 +90,20 @@ export default async function FeedPage() {
           {contents.map((content) => (
             <Card key={content.id}>
               <CardHeader className="flex flex-row items-center gap-4">
-                <Avatar>
-                  <AvatarImage src={content.creator.avatar || undefined} />
-                  <AvatarFallback>
-                    {content.creator.artistName.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                <Link href={`/creator/${content.creator.id}`}>
+                  <Avatar className="cursor-pointer hover:ring-2 hover:ring-primary transition-all">
+                    <AvatarImage src={content.creator.avatar || undefined} />
+                    <AvatarFallback>
+                      {content.creator.artistName.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Link>
                 <div className="flex-1">
-                  <CardTitle className="text-base">
-                    {content.creator.artistName}
-                  </CardTitle>
+                  <Link href={`/creator/${content.creator.id}`}>
+                    <CardTitle className="text-base hover:text-primary transition-colors cursor-pointer">
+                      {content.creator.artistName}
+                    </CardTitle>
+                  </Link>
                   <p className="text-sm text-muted-foreground">
                     {content.publishedAt
                       ? formatRelativeTime(content.publishedAt)
