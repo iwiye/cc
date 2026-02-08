@@ -17,6 +17,7 @@ async function getAdminStats() {
     totalSubscribers,
     pendingKyc,
     pendingWithdrawals,
+    pendingModeration,
     totalTransactions,
   ] = await Promise.all([
     prisma.user.count(),
@@ -24,6 +25,7 @@ async function getAdminStats() {
     prisma.user.count({ where: { role: "SUBSCRIBER" } }),
     prisma.creatorProfile.count({ where: { kycStatus: "PENDING" } }),
     prisma.withdrawal.count({ where: { status: "PENDING" } }),
+    prisma.content.count({ where: { status: { in: ["PENDING", "FLAGGED"] } } }),
     prisma.transaction.aggregate({
       where: { status: "SUCCESS" },
       _sum: { amount: true },
@@ -37,6 +39,7 @@ async function getAdminStats() {
     totalSubscribers,
     pendingKyc,
     pendingWithdrawals,
+    pendingModeration,
     totalRevenue: totalTransactions._sum.amount || 0,
     totalTransactions: totalTransactions._count,
   }
@@ -136,17 +139,19 @@ export default async function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={stats.pendingModeration > 0 ? "border-red-500" : ""}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className={`text-sm font-medium ${stats.pendingModeration > 0 ? "text-red-600" : ""}`}>
               Modération
             </CardTitle>
-            <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+            <AlertTriangle className={`h-4 w-4 ${stats.pendingModeration > 0 ? "text-red-600" : "text-muted-foreground"}`} />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className={`text-2xl font-bold ${stats.pendingModeration > 0 ? "text-red-600" : ""}`}>
+              {stats.pendingModeration}
+            </div>
             <p className="text-xs text-muted-foreground">
-              Contenus signalés
+              Contenus à modérer
             </p>
           </CardContent>
         </Card>
@@ -181,6 +186,15 @@ export default async function AdminDashboardPage() {
               <span>Gérer les créatrices</span>
               <span className="text-primary font-medium">
                 {stats.totalCreators}
+              </span>
+            </a>
+            <a
+              href="/admin/moderation"
+              className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent transition-colors"
+            >
+              <span>Modérer le contenu</span>
+              <span className="text-primary font-medium">
+                {stats.pendingModeration}
               </span>
             </a>
           </CardContent>

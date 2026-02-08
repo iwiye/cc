@@ -20,7 +20,9 @@ enum ContentType {
 
 enum ContentStatus {
   DRAFT
+  PENDING
   PUBLISHED
+  FLAGGED
   REJECTED
 }
 
