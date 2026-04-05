@@ -1,84 +1,73 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  /* Brand colors */
+  --color-navy: #0F2C6F;
+  --color-navy-dark: #0A1628;
+  --color-navy-light: #1A3F8F;
+  --color-gold: #F0A500;
+  --color-gold-light: #FFF3DC;
+
+  /* Surface colors */
+  --color-surface: #FAFAFA;
+  --color-surface-gray: #F4F5F7;
+  --color-surface-blue: #E8EEF9;
+
+  /* Text colors */
+  --color-muted: #8A94A6;
+  --color-body: #1C2940;
+
+  /* Typography — CSS variable names matching component usage */
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-dm-sans);
+
+  /* Border radius */
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 24px rgba(15, 44, 111, 0.1);
+  --shadow-elevated: 0 12px 48px rgba(15, 44, 111, 0.18);
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #e11d48;
-  --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #e11d48;
-  --radius: 0.5rem;
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
-.dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #0a0a0a;
-  --card-foreground: #fafafa;
-  --popover: #0a0a0a;
-  --popover-foreground: #fafafa;
-  --primary: #f43f5e;
-  --primary-foreground: #ffffff;
-  --secondary: #27272a;
-  --secondary-foreground: #fafafa;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  --accent: #27272a;
-  --accent-foreground: #fafafa;
-  --destructive: #7f1d1d;
-  --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #f43f5e;
+/* Offset for sticky header on anchor links */
+section[id] {
+  scroll-margin-top: 5rem;
 }
 
-* {
-  border-color: var(--border);
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid #0F2C6F;
+  outline-offset: 2px;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #1C2940;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* Card hover elevation */
+.card-hover {
+  box-shadow: 0 4px 24px rgba(15, 44, 111, 0.1);
+  transition: box-shadow 300ms ease;
+}
+.card-hover:hover {
+  box-shadow: 0 12px 48px rgba(15, 44, 111, 0.18);
+}
+
+/* Footer links */
+.footer-link {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 200ms ease;
+}
+.footer-link:hover {
+  color: #ffffff;
 }

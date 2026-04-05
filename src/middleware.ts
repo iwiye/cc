@@ -34,7 +34,7 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  const userRole = session.user.role
+  const userRole = session?.user?.role
 
   // Si l'utilisateur est connecté et essaie d'accéder aux pages d'auth
   if (pathname === "/login" || pathname === "/register") {
@@ -48,15 +48,9 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/discover", request.url))
   }
 
-  // Redirection de la page d'accueil selon le rôle
+  // Landing page is always accessible
   if (pathname === "/") {
-    if (userRole === "CREATOR") {
-      return NextResponse.redirect(new URL("/dashboard", request.url))
-    }
-    if (userRole === "ADMIN") {
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url))
-    }
-    return NextResponse.redirect(new URL("/discover", request.url))
+    return NextResponse.next()
   }
 
   // Protection des routes créatrice
